@@ -1,0 +1,12 @@
+078fef17a4ccc9a893f43f154bfd6cf2 *DESCRIPTION
+d666e0e2a3e28e7887bddfafc2a0483e *NAMESPACE
+6af2e5280817dfaf71b065a8d9598e8c *R/wpl4.r
+dcd4db62f1c3ce53450211ae5390aedf *data/CVD_Accidents.RData
+0236217b8e1263515c769a896a4266ca *man/CVD_Accidents.Rd
+3e310e9870baa90bdec3c6492e9e5f31 *man/Chenprob.Rd
+f33145db5916d2e66b6848f47abcab08 *man/GAMprob.Rd
+07d581e97aa81f6362fe0040633c18d6 *man/GLMprob.Rd
+0569784abeb6a768f8f27d5bdf5fe114 *man/KMprob.Rd
+73aede1fbc261ae16f826aa395f0cfdb *man/multipleNCC-internal.rd
+d76ac2f14435012e248fac37d0b636b9 *man/multipleNCC-package.Rd
+95d8f8b6e2a95cea834bf8d470558795 *man/wpl.Rd

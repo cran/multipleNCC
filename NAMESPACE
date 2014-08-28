@@ -1,0 +1,3 @@
+exportPattern("^[[:alpha:]]+")
+export(wpl,KMprob,GLMprob,GAMprob,Chenprob)
+import(gam,survival)
