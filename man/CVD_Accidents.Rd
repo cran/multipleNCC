@@ -8,10 +8,10 @@ Causes of death in three counties in Norway in 1974-2000
 Causes of death from 1974-2000 for all men and women participating in a 
 cardiovascular health screening in 1974-1978 in three counties in Norway.
 All variables are know for all cohort members and it is thus a synthetic 
-nested case-control. One control per case is sampled for cardiovascular disease cases and
-subjects who died from alcohol abuse, liver disease, and accidents and violence. 
-The controls are matched sex and BMI plus/minus 2 in addition to being alive at
-the time the case died.                                 
+nested case-control stidy. One control per case is sampled for cardiovascular 
+disease cases and subjects who died from alcohol abuse, liver disease, and
+accidents and violence. The controls are matched sex and BMI plus/minus 2 
+in addition to being alive at the time the case died.                                 
 }
 \usage{data(CVD_Accidents)}
 \format{

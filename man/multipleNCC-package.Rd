@@ -3,20 +3,25 @@
 \alias{multipleNCC}
 \docType{package}
 \title{
- Weighted partial likelihood for multiple endpoints
+Weighted partial likelihood for nested case-control data
 }
 \description{
-This package fit Cox proportional hazard models with a weigthed partial likelihood. 
-It handles competing risks (with one endpoint being a special case). It uses cases 
-and controls from other endpoints as additional controls for each endpoint. 
- See \code{\link{wpl}} for help. 
+Fits Cox proportional hazards models with a weigthed partial likelihood. 
+It handles competing risks (with one endpoint being a special situation). 
+It uses cases and controls from other endpoints as additional controls for 
+each endpoint. See \code{\link{wpl}} for help. 
+ 
+Four weight estimators are implemented; Kaplan-Meier type \code{\link{KMprob}},
+GAM (\code{\link{GAMprob}}), GLM (\code{\link{GLMprob}}) and local averaging
+(\code{\link{Chenprob}})
+
 }
 \details{
 \tabular{ll}{
 Package: \tab multipleNCC\cr
 Type: \tab Package\cr
-Version: \tab 1.0\cr
-Date: \tab 2011-05-16\cr
+Version: \tab 1.1\cr
+Date: \tab 2015-06-24\cr
 License: \tab GPL-2\cr
 LazyLoad: \tab yes\cr
 }

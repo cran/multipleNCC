@@ -1,3 +1,11 @@
-exportPattern("^[[:alpha:]]+")
-export(wpl,KMprob,GLMprob,GAMprob,Chenprob)
-import(gam,survival)
+S3method(wpl, default)
+S3method(wpl, formula)
+S3method(print, wpl)
+S3method(summary, wpl)
+
+export(wpl,KMprob,GLMprob,GAMprob,Chenprob,ModelbasedVar,PoststratVar)
+
+import(mgcv, survival)
+importFrom("stats", "residuals", "resid", "var", "binomial", "glm", 
+           "pchisq", "naprint", "qnorm", "printCoefmat", "model.frame", 
+           "model.extract", "model.matrix", "model.response")

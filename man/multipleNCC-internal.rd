@@ -1,9 +1,9 @@
 \name{multipleNCC-internal}
 \alias{multipleNCC-internal}
-\alias{ModelbasedVar}
-\alias{PoststratVar}
-\alias{print.wpl}
-\alias{summary.wpl}
+%\alias{ModelbasedVar}
+%\alias{PoststratVar}
+%\alias{print.wpl}
+%\alias{summary.wpl}
 \alias{wpl.default}
 \alias{wpl.formula}
 \alias{wplEst}
@@ -13,10 +13,10 @@
 \alias{pKM}
 \docType{package}
 \title{
-Internal functions
+Internal function
 }
 \description{
-Internal functions
+Internal function
 }
 
 \author{

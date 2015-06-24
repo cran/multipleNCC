@@ -2,7 +2,7 @@
 \alias{KMprob}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Weights estimated with a Kaplan-Meier type formula
+Sampling probabilities estimated with a Kaplan-Meier type formula
 }
 \description{
 Estimates sampling probabilities with a Kaplan-Meier type formula. 
@@ -49,8 +49,9 @@ A vector of cohort dimension of sampling probabilities.
 \references{
 Samuelsen SO. A pseudolikelihood approach to analysis of nested case-control studies.
 Biometrika, 84(2):379-394, 1997. \cr
-Stoer NC and Samuelsen SO (2012): Comparison of estimators in nested case-control 
-studies with multiple outcomes. Lifetime Data Analysis, 18(3), 261-283.
+Stoer NC and Samuelsen SO (2013): Inverse probability weighting in nested case-control
+studies with additional matching - a simulation study. Statistics in Medicine, 
+32(30), 5328-5339.
 }
 \author{
 Nathalie C. Stoer
@@ -66,7 +67,7 @@ Nathalie C. Stoer
 \examples{
 data(CVD_Accidents)
 attach(CVD_Accidents)
-KMprob(agestop,samplestat,m=1,agestart,match.var=cbind(sex,bmi))
+KMprob(agestop,samplestat,m=1,agestart)
 KMprob(agestop,samplestat,m=1,agestart,match.var=cbind(bmi),match.int=c(-2,2))
 
 ## The function is currently defined as

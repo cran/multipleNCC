@@ -2,13 +2,17 @@
 \alias{GLMprob}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Weights estimated with logistic regression.
+Sampling probabilities estimated with logistic regression.
 }
 \description{
 Estimates sampling probabilities with logistic regression. 
 The weights included in the Cox-regressions (wpl) and which could be used for
 other procedures are inverse sampling probabilities i.e. the inverse of these
 probabilities. The probabilties are estimated for all subjects in the cohort.
+
+\code{survtime}, \code{left.time} and continuous matching variables are 
+included in the logistic regression as continuous variables while 
+categorical matching variables are taken as factors. 
 }
 \usage{
 GLMprob(survtime, samplestat, left.time = 0, match.var = 0, match.int = 0)
@@ -43,8 +47,9 @@ A vector of cohort dimension of sampling probabilities.
 }
 
 \references{
-Stoer NC and Samuelsen SO (2012): Comparison of estimators in nested case-control 
-studies with multiple outcomes. Lifetime Data Analysis, 18(3), 261-283.
+Stoer NC and Samuelsen SO (2013): Inverse probability weighting in nested case-control
+studies with additional matching - a simulation study. Statistics in Medicine, 
+32(30), 5328-5339.
 }
 \author{
 Nathalie C. Stoer

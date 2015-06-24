@@ -2,10 +2,10 @@
 \alias{Chenprob}
 
 \title{
-Weights estimated with local averaging.
+Sampling probabilities estimated with local averaging.
 }
 \description{
-Estimates sampling probabilities with local averaging (KN. Chen, 2001). 
+Estimates sampling probabilities with local averaging (Chen, 2001). 
 The weights included in the Cox-regressions (wpl) and which could be used for
 other procedures are inverse sampling probabilities i.e. the inverse of these
 probabilities. The probabilties are estimated for all subjects in the cohort.
@@ -60,8 +60,8 @@ Nathalie C. Stoer
 
 data(CVD_Accidents)
 attach(CVD_Accidents)
-Chenprob(agestop,samplestat,agestart)
-Chenprob(agestop,samplestat,agestart,no.intervals.left=c(3,4))
+Chenprob(agestop,samplestat,left.time=agestart)
+Chenprob(agestop,samplestat,left.time=agestart,no.intervals.left=c(3,4))
 
 function (survtime, samplestat, no.intervals, left.time = 0, no.intervals.left = 0) 
 {

@@ -2,12 +2,12 @@
 \alias{wpl}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
- Weighted partial likelihood for multiple endpoints
+Weighted partial likelihood for nested case-control data 
 }
 \description{
-This package fits Cox proportional hazard models for nested case-control data 
-with a weigthed partial likelihood. It breaks the matching between cases and 
-controls and this enables the controls to be reused for other endpoints. It 
+Fits Cox proportional hazards models for nested case-control data 
+with a weigthed partial likelihood. Matching between cases and 
+controls is broken which enables the controls to be reused for other endpoints. It 
 handles competing risks (with simple survival data with one endpoint being a
 special case) and cases and controls from one endpoint are being used as 
 additional controls for another endpoint. There are four choices of weights; 
@@ -46,7 +46,7 @@ subjects in the cohort, 1: sampled controls, 2,3,... indicate different events.
 Cohort dimension. 
 }
   \item{m}{
-Number of sampled controls. A scalar if equal number of controls for all case. 
+Number of sampled controls. A scalar if equal number of controls for all cases. 
 If unequal number of controls per case: A vector of length number of cases. The 
 vector must be in the same order as the cases in the samplestat-vector.
 }
@@ -59,7 +59,7 @@ Number of intervals for censoring times for Chen-weights with only right
 censoring
 }
   \item{variance}{
-Default is robust variances, but pseudovariance (only for KM-weights), 
+Default is robust variances, but model based variance (only for KM-weights), 
 \code{"Modelbased"} and variance based on stratified case-cohort 
 \code{"Poststrat"} (only for Chen-weights) is also possible. 
 \code{Pseudo}-variance and \code{Strat}-variance will appear under 
@@ -89,15 +89,15 @@ Other arguments
 \value{
 An object of class wpl representing the fit. Objects of this class have methods 
 for the functions \code{print} and \code{summary}.
-The wpl-object consits of the following elemetns which is repeated for each 
+The wpl-object consists of the following elements which are repeated for each 
 endpoint. Unfortunately only the values for the first endpoint can be reached 
 by $-operator(ex. fit$coefficients only return the coefficients for the first 
 endpoint)
 %%  If it is a LIST, use
   \item{coefficients}{The vector of coefficients.}
   \item{var}{Robust or estimated variance}
-  \item{weighted.loglik}{A vector of length 2 containing the log-likelihood with the 
-  initial values and with the final values of the coefficients.}
+  \item{weighted.loglik}{A vector of length 2 containing the log-likelihood with 
+  the initial values and with the final values of the coefficients.}
   \item{iter}{Number of iterations used}
   \item{linear.predictors}{The vector of linear predictors, one per subject. 
   Note that this vector has been centered, see predict.coxph for more details}
@@ -111,7 +111,7 @@ endpoint)
   \item{wald.test}{The Wald test of whether the final coefficients differ from 
   the initial values}
   \item{y}{Inclusion time and event/censoring time}
-  \item{weights}{The vector of weights, which is inverse sampling probabilities}
+  \item{weights}{The vector of weights, which are inverse sampling probabilities}
   \item{est.var}{Estimated variance (T) or robust variance (F)}
   
  .\cr
@@ -121,8 +121,9 @@ endpoint)
 \references{
 Samuelsen SO. A pseudolikelihood approach to analysis of nested case-control studies.
 Biometrika, 84(2):379-394, 1997. \cr
-Stoer NC and Samuelsen SO (2012): Comparison of estimators in nested case-control 
-studies with multiple outcomes. Lifetime Data Analysis, 18(3), 261-283.
+Stoer NC and Samuelsen SO (2013): Inverse probability weighting in nested case-control
+studies with additional matching - a simulation study. Statistics in Medicine, 
+32(30), 5328-5339.
 }
 \author{
 Nathalie C. Stoer
