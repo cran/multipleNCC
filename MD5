@@ -1,6 +1,6 @@
-69261d3b60fb0f8fed0d3f66187e160c *DESCRIPTION
-b19bf4788a6f843daf1af106c1090405 *NAMESPACE
-24fa0e013524b05386b045c9d56e585d *R/wpl6.R
+0cd703c70622cc727c6088ea1f48fcb3 *DESCRIPTION
+1a6b5e4d8220eb4b20500d7f292838b8 *NAMESPACE
+9f9024a27de9b24f4898aae6a96e6faa *R/wpl7.R
 dcd4db62f1c3ce53450211ae5390aedf *data/CVD_Accidents.RData
 a42829f8d0a9d5b6092ae81f8a359ce6 *man/CVD_Accidents.Rd
 e158c8540484d12f10adf0d07d525df7 *man/Chenprob.Rd
@@ -11,6 +11,10 @@ c8b37b4515e64a163ea50042bea6fb90 *man/GLMprob.Rd
 f1b194f2d57b86f064454bce2c891fcb *man/PoststratVar.Rd
 c6d601d6d3f7eef8dec0b8f66a91a236 *man/multipleNCC-internal.rd
 0a6a3ad58a6da6937cc41d9f1e236fb8 *man/multipleNCC-package.Rd
+a26706e71a8ee9e276e7187e8a754ff9 *man/pChen.Rd
+f5de3abe2f3bb52d45ef7a3427b8e714 *man/pGAM.Rd
+fa3968cfa871f002e26fe2f276a517b3 *man/pGLM.Rd
+117459ff7685b1e70aaa48a740c088ef *man/pKM.Rd
 9b9341feaea1788cd8043980d76fbaa7 *man/print.wpl.Rd
 50d424398a9eaf24b68d49892efa8f5e *man/summary.wpl.Rd
 39514c6a7263d9e94f9dae50d7fc9b18 *man/wpl.Rd

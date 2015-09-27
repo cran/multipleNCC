@@ -9,3 +9,4 @@ import(mgcv, survival)
 importFrom("stats", "residuals", "resid", "var", "binomial", "glm", 
            "pchisq", "naprint", "qnorm", "printCoefmat", "model.frame", 
            "model.extract", "model.matrix", "model.response")
+
