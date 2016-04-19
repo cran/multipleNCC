@@ -7,7 +7,6 @@
 
 wplEst = function(x,data, brukt, m, weight.method, no.intervals,
                   variance, no.intervals.left, match.var, match.int)  {
-  #match.var = data$match.var
   
   if(dim(x[[2]])[2] == 3)  {
     left.time = x[[2]][,1]
@@ -202,11 +201,11 @@ wplEst = function(x,data, brukt, m, weight.method, no.intervals,
     for(i in 1:(endpoints))  {
       if(length(strat)==0){
         fit = coxph(Surv(survtime.ncc,status.ncc==i)~x+cluster(ind.no.ncc),weights=1/p)
-    }
-    if(length(strat)>0)  {
-      fit = coxph(Surv(survtime.ncc,status.ncc==i)~x+strata(stratum)+cluster(ind.no.ncc),weights=1/p)
-      fit = fit[-21]
-    }
+      }
+      if(length(strat)>0)  {
+        fit = coxph(Surv(survtime.ncc,status.ncc==i)~x+strata(stratum)+cluster(ind.no.ncc),weights=1/p)
+        fit = fit[-21]
+      }
       fit$est.var=F
       if(variance == "Modelbased")   {
         left = rep(0,n.cohort)
@@ -232,7 +231,7 @@ wplEst = function(x,data, brukt, m, weight.method, no.intervals,
       stratum = xx[,strat]
       temp2 = stratum*1:dim(stratum)[2]
       stratum = (apply(temp2,1,sum))
-  }
+    }
     
     for(i in 1:(endpoints))  {
       if(length(strat) == 0) {
@@ -618,22 +617,20 @@ pKM = function(status,survtime,m,n.cohort,left.time, match.var, match.int)  {
 
 pGAM = function(status,survtime,samplestat,n.cohort,left.time,match.var,match.int)  {
   
-  kat = 0
-  kont = 1:(length(match.var)/n.cohort)
-  if(sum(match.int ==0) > 1)  {
-    hvem = which(match.int == 0)
-    kat = (hvem[1]+1)/2
-    i=4
-    if(length(hvem) > 2)  {
-      while(i <(length(hvem)))  {
-        kat = c(kat,((hvem[i]+1)/2))
-        i = i+2
-      }
+  if(length(match.int)>1)  {
+    kat = 0 
+    kont = 0
+    temp1 = which(match.int == 0)
+    temp2 = which(match.int != 0)
+    if(length(temp1)>1) {
+      indtemp = seq(2,length(temp1),2)
+      kat = temp1[indtemp]/2  
     }
-    kont = 1:(length(match.var)/n.cohort)
-    kont = which(!kont%in%kat)
+    if(length(temp2)>1) {
+      indtemp = seq(2,length(temp2),2)
+      kont = temp2[indtemp]/2  
+    }
   }
-  
   
   if(length(left.time)==1 & length(match.var) == 1)  {
     pgam = gam(samplestat~s(survtime),family=binomial,subset=status==0)
@@ -643,26 +640,29 @@ pGAM = function(status,survtime,samplestat,n.cohort,left.time,match.var,match.in
     pgam = gam(samplestat~s(survtime)+s(left.time),family=binomial,subset=status==0)
     pgam = pgam$fitted
   }
+  
   if(length(left.time)==1 & length(match.var) > 1)  {
-    pgam = gam(samplestat~s(survtime),family=binomial,subset=status==0)
-    pgam = pgam$fitted
-  }
-  if(length(left.time)==1 & length(match.var) > 1)  {
-    if(sum(match.int ==0) > 1)  {
-      pgam = gam(samplestat~s(survtime)+s(match.var[,kont])+factor(match.var[,kat]),family=binomial,subset=status==0)
-    }
-    if(sum(match.int ==0) <= 1)  {
+    if(length(kat) == 1 && kat == 0) {
       pgam = gam(samplestat~s(survtime)+s(match.var),family=binomial,subset=status==0)
+    }
+    else if(length(kont) == 1 && kont == 0) {
+      pgam = gam(samplestat~s(survtime)+factor(match.var),family=binomial,subset=status==0)
+    }
+    else{
+      pgam = gam(samplestat~s(survtime)+s(match.var[,kont])+factor(match.var[,kat]),family=binomial,subset=status==0)
     }
     pgam = pgam$fitted
   }
   
   if(length(left.time)==n.cohort & length(match.var) > 1)  {
-    if(sum(match.int ==0) > 1)  {
-      pgam = gam(samplestat~s(survtime)+s(left.time)+s(match.var[,kont])+factor(match.var[,kat]),family=binomial,subset=status==0)
-    }
-    if(sum(match.int ==0) <= 1)  {
+    if(length(kat) == 1 && kat == 0) {
       pgam = gam(samplestat~s(survtime)+s(left.time)+s(match.var),family=binomial,subset=status==0)
+    }
+    else if(length(kont) == 1 && kont == 0) {
+      pgam = gam(samplestat~s(survtime)+s(left.time)+factor(match.var),family=binomial,subset=status==0)
+    }
+    else{
+      pgam = gam(samplestat~s(survtime)+s(left.time)+s(match.var[,kont])+factor(match.var[,kat]),family=binomial,subset=status==0)
     }
     pgam = pgam$fitted
   }
@@ -670,20 +670,20 @@ pGAM = function(status,survtime,samplestat,n.cohort,left.time,match.var,match.in
 }
 
 pGLM = function(status,survtime,samplestat,n.cohort,left.time,match.var,match.int)   {
-  kat = 0
-  kont = 1:(length(match.var)/n.cohort)
-  if(sum(match.int ==0) > 1)  {
-    hvem = which(match.int == 0)
-    kat = (hvem[1]+1)/2
-    i=4
-    if(length(hvem) > 2)  {
-      while(i <(length(hvem)))  {
-        kat = c(kat,((hvem[i]+1)/2))
-        i = i+2
-      }
+  if(length(match.int)>1)  {
+    kat = 0 
+    kont = 0
+    temp1 = which(match.int == 0)
+    temp2 = which(match.int != 0)
+  
+    if(length(temp1)>1) {
+      indtemp = seq(2,length(temp1),2)
+      kat = temp1[indtemp]/2  
     }
-    kont = 1:(length(match.var)/n.cohort)
-    kont = which(!kont%in%kat)
+    if(length(temp2)>1) {
+      indtemp = seq(2,length(temp2),2)
+      kont = temp2[indtemp]/2  
+    }
   }
   
   if(length(left.time)==1 & length(match.var) == 1)  {
@@ -691,11 +691,14 @@ pGLM = function(status,survtime,samplestat,n.cohort,left.time,match.var,match.in
     pglm = pglm$fitted
   }
   if(length(left.time)==1 & length(match.var) > 1)  {
-    if(sum(match.int ==0) > 1)  {
-      pglm = glm(samplestat~survtime+match.var[,kont]+factor(match.var[,kat]),family=binomial,subset=status==0)
-    }
-    if(sum(match.int ==0) <= 1)  {
+    if(kat == 0) {
       pglm = glm(samplestat~survtime+match.var,family=binomial,subset=status==0)
+    }
+    if(kont == 0) {
+      pglm = glm(samplestat~survtime+factor(match.var),family=binomial,subset=status==0)
+    }
+    if(kont != 0 & kat != 0) {
+      pglm = glm(samplestat~survtime+match.var[,kont]+factor(match.var[,kat]),family=binomial,subset=status==0)
     }
     pglm = pglm$fitted
   }
@@ -704,35 +707,39 @@ pGLM = function(status,survtime,samplestat,n.cohort,left.time,match.var,match.in
     pglm = glm(samplestat~survtime+left.time,family=binomial,subset=status==0)
     pglm = pglm$fitted
   }
+  
   if(length(left.time)==n.cohort & length(match.var) > 1)  {
-    if(sum(match.int ==0) > 1)  {
-      pglm = glm(samplestat~survtime+left.time+match.var[,kont]+factor(match.var[,kat]),family=binomial,subset=status==0)
-    }
-    if(sum(match.int ==0) <= 1)  {
+    if(length(kat) == 1 && kat == 0) {
       pglm = glm(samplestat~survtime+left.time+match.var,family=binomial,subset=status==0)
     }
+    else if(length(kont)==1 && kont==0) {
+      pglm = glm(samplestat~survtime+left.time+factor(match.var),family=binomial,subset=status==0)
+    }
+    else{#(kont != 0 & kat != 0) {
+      pglm = glm(samplestat~survtime+left.time+match.var[,kont]+factor(match.var[,kat]),family=binomial,subset=status==0)
+    }  
     pglm = pglm$fitted
   }
   pglm
 }
 
 pChen = function(status,survtime,samplestat,ind.no,n.cohort,no.intervals,left.time,
-                 no.intervals.left)  {
+                  no.intervals.left)  {
   
   if(length(left.time)==1)  {
     pchen = 1:no.intervals
     partT = seq(min(survtime-0.001),max(survtime),length=(no.intervals+1))
-    for(i in 1:(length(partT)-1))   {
-      ne = sum(status == 0 & survtime >= partT[i] &
+    for(i in 1:(length(partT)))   {
+      ne = sum(status == 0 & survtime > partT[i] &
                  survtime <= partT[i+1])
       te = sum(status == 0 & samplestat != 0 &
-                 survtime >= partT[i] & survtime <= partT[i+1])
+                 survtime > partT[i] & survtime <= partT[i+1])
       pchen[i] = te/ne
     }
     
     #controls
     pp = rep(0,n.cohort)
-    for(i in 1:(length(partT)-1))  {
+    for(i in 1:(length(partT)))  {
       test = ind.no[(survtime > partT[i] & survtime <= partT[i+1]
                      & status == 0)]
       pp[test] = pchen[i]
@@ -740,11 +747,11 @@ pChen = function(status,survtime,samplestat,ind.no,n.cohort,no.intervals,left.ti
   }
   
   if(length(left.time)==n.cohort)  {
-    pchen = matrix(0,nrow = no.intervals.left[2], ncol = no.intervals.left[1])
+    pchen = matrix(0,nrow = (no.intervals.left[2]+1), ncol = (no.intervals.left[1]+1))
     partT = seq(min(survtime-0.001),max(survtime),length=(no.intervals.left[2]+1))
     partV = seq(min(left.time-0.001),max(left.time),length=(no.intervals.left[1]+1))
-    for(i in 1:(length(partT)-1))   {
-      for(ii in 1:(length(partV)-1)) {
+    for(i in 1:(length(partT)))   {
+      for(ii in 1:(length(partV))) {
         testT = survtime > partT[i]  & survtime <= partT[i+1]
         testV = left.time > partV[ii]  & left.time <= partV[ii+1]
         ne = sum(status == 0 & testT & testV)
@@ -755,17 +762,18 @@ pChen = function(status,survtime,samplestat,ind.no,n.cohort,no.intervals,left.ti
     
     #Controls
     pp = rep(0,n.cohort)
-    for(i in 1:(length(partT)-1))  {
-      for(ii in 1:(length(partV)-1))  {
+    for(i in 1:(length(partT)))  {
+      for(ii in 1:(length(partV)))  {
         testT = survtime > partT[i]  & survtime <= partT[i+1]
         testV = left.time > partV[ii]  & left.time <= partV[ii+1]
-        test = ind.no[(testT & testV & samplestat ==1 & status == 0)]
+        test = ind.no[(testT & testV & samplestat != 0 & status == 0)]
         pp[test] = pchen[i,ii]
       }
     }
   }
   pp
 }
+
 
 ModelbasedVar = function(fit,status,survtime,left.time,samplestat,endpoint,m,psample,match.var,match.int)  {
   samplestat = samplestat!=0
@@ -1215,7 +1223,7 @@ wpl.default = function(x,data, samplestat, m=1, weight.method="KM",
                        no.intervals=10, variance = "robust", no.intervals.left = c(3,4),
                        match.var=0, match.int=0,...)  {
   
-
+  
   est = wplEst(x,data, samplestat, m, weight.method, no.intervals,
                variance, no.intervals.left, match.var, match.int)
   
@@ -1278,9 +1286,11 @@ print.wpl = function(x,...)  {
     invisible(x)
   }
   
-  endpoints = length(x)/20
+  #endpoints = length(x)/20
+  elements = length(unique(names(x)))
+  endpoints = length(x)/elements
   for(i in 1:endpoints)  {
-    fit = x[(1+(i-1)*20):(i*20)]
+    fit = x[(1+(i-1)*elements):(i*elements)]
     class(fit) = "coxph"
     cat("Endpoint", i,":","\n")
     print.coxph(fit)
@@ -1383,9 +1393,11 @@ summary.wpl = function(object,...)  {
   }
   
   
-  endpoints = length(object)/20
+  #endpoints = length(object)/20
+  elements = length(unique(names(object)))
+  endpoints = length(object)/elements
   for(i in 1:endpoints)  {
-    fit = object[(1+(i-1)*20):(i*20)]
+    fit = object[(1+(i-1)*elements):(i*elements)]
     class(fit) = "coxph"
     cat("Endpoint", i,":","\n")
     print.summary.coxph(summary.coxph(fit))
@@ -1396,15 +1408,13 @@ summary.wpl = function(object,...)  {
 
 wpl.formula = function(formula,data=data, samplestat,...)  {
   
-  mf = model.frame(formula=formula,data=data,samplestat=samplestat)
+  mf = model.frame(formula=formula,data=data)
   
-  samplestat = model.extract(mf,"samplestat")
-    
   x.coef = model.matrix(attr(mf,"terms"),data=mf)
   x.coef = as.matrix(x.coef[,-1])
   ant.coef = dim(x.coef)[2]
   y = model.response(mf)
-   
+  
   if(dim(y)[2] == 2)  {
     left.time = 0
     survtime = y[,1]
@@ -1417,7 +1427,7 @@ wpl.formula = function(formula,data=data, samplestat,...)  {
     status = y[,3]
   }
   
-
+  
   x = array(data=list(x.coef,y))
   
   est = wpl.default(x, data, samplestat,...)
