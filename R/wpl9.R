@@ -69,13 +69,11 @@ wplEst = function(x,data, brukt, m, weight.method, no.intervals,
     stop("m must either be a scalar or a vector of the same length as number of cases")
   }
   
-  if(match.int!=0 && length(match.int) < dim(match.var)[2]*2)  {
-    stop("Too few elements in match.int")
+  if(length(match.int) >1 && length(match.int) != dim(match.var)[2]*2)  {
+    stop("Length of match.int must be 2*number of matching variables")
   }
   
-  if(match.int != 0 && length(match.int) > dim(match.var)[2]*2)  {
-    stop("Too many elements in match.int")
-  }
+  
   
   
   #cat("Note that the data are sorted by survtime")

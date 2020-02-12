@@ -30,7 +30,7 @@ LazyLoad: \tab yes\cr
 \author{
 Nathalie C. Stoer
 
-Maintainer: <nathalcs@math.uio.no>
+Maintainer: <nathalie.c.stoer@kreftregisteret.no>
 
 }
 \references{

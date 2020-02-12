@@ -81,9 +81,6 @@ A vector of length 2*number of matching variables. For caliper matching
 c(-epsilon,epsilon). For exact matching match.int should consist of c(0,0). 
 } 
 
-\item{\dots}{
-Other arguments
-}
 }
 
 \value{
