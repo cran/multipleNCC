@@ -1,5 +1,5 @@
 \name{pGAM}
-%\alias{pGAM}
+\alias{pGAM}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
   Generlaized additive model weights 

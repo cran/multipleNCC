@@ -1,5 +1,5 @@
 \name{pChen}
-%\alias{pChen}
+\alias{pChen}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
   Chen-weights 

@@ -1,5 +1,5 @@
 \name{pGLM}
-%\alias{pGLM}
+\alias{pGLM}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
   Logistic regression weights 

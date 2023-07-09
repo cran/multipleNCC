@@ -1,5 +1,5 @@
 \name{pKM}
-%\alias{pKM}
+\alias{pKM}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
   Kaplan-Meier weights 

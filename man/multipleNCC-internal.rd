@@ -7,10 +7,10 @@
 \alias{wpl.default}
 \alias{wpl.formula}
 \alias{wplEst}
-\alias{pChen}
-\alias{pGAM}
-\alias{pGLM}
-\alias{pKM}
+%\alias{pChen}
+%\alias{pGAM}
+%\alias{pGLM}
+%\alias{pKM}
 \docType{package}
 \title{
 Internal function
