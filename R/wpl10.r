@@ -69,12 +69,8 @@ wplEst = function(x,data, brukt, m, weight.method, no.intervals,
     stop("m must either be a scalar or a vector of the same length as number of cases")
   }
   
-  if(match.int!=0 && length(match.int) < dim(match.var)[2]*2)  {
-    stop("Too few elements in match.int")
-  }
-  
-  if(match.int != 0 && length(match.int) > dim(match.var)[2]*2)  {
-    stop("Too many elements in match.int")
+  if(length(match.int) >1 && length(match.int) != dim(match.var)[2]*2)  {
+    stop("Length of match.int must be 2*number of matching variables")
   }
   
   
@@ -122,7 +118,7 @@ wplEst = function(x,data, brukt, m, weight.method, no.intervals,
   left.time.ncc = left.time[samplestat==1]
   
   if(weight.method != "KM" & weight.method!= "gam" & weight.method!= "glm" &
-       weight.method!= "Chen")  {
+     weight.method!= "Chen")  {
     stop("Invalid weight method. It should be either KM, gam, glm or Chen.")
   }
   
@@ -646,10 +642,22 @@ pGAM = function(status,survtime,samplestat,n.cohort,left.time,match.var,match.in
       pgam = gam(samplestat~s(survtime)+s(match.var),family=binomial,subset=status==0)
     }
     else if(length(kont) == 1 && kont == 0) {
-      pgam = gam(samplestat~s(survtime)+factor(match.var),family=binomial,subset=status==0)
+      temp.match.var = factor(match.var[,1])
+      if(length(kat) >1)  {
+        for(i in 2:length(kat))  {
+          temp.match.var = cbind(temp.match.var, factor(match.var[,i]))
+        }
+      }
+      pgam = gam(samplestat~s(survtime)+temp.match.var,family=binomial,subset=status==0)
     }
     else{
-      pgam = gam(samplestat~s(survtime)+s(match.var[,kont])+factor(match.var[,kat]),family=binomial,subset=status==0)
+      temp.match.var = factor(match.var[,1])
+      if(length(kat) >1)  {
+        for(i in 2:length(kat))  {
+          temp.match.var = cbind(temp.match.var, factor(match.var[,i]))
+        }
+      }
+      pgam = gam(samplestat~s(survtime)+s(match.var[,kont])+temp.match.var,family=binomial,subset=status==0)
     }
     pgam = pgam$fitted
   }
@@ -659,10 +667,22 @@ pGAM = function(status,survtime,samplestat,n.cohort,left.time,match.var,match.in
       pgam = gam(samplestat~s(survtime)+s(left.time)+s(match.var),family=binomial,subset=status==0)
     }
     else if(length(kont) == 1 && kont == 0) {
-      pgam = gam(samplestat~s(survtime)+s(left.time)+factor(match.var),family=binomial,subset=status==0)
+      temp.match.var = factor(match.var[,1])
+      if(length(kat) >1)  {
+        for(i in 2:length(kat))  {
+          temp.match.var = cbind(temp.match.var, factor(match.var[,i]))
+        }
+      }
+      pgam = gam(samplestat~s(survtime)+s(left.time)+temp.match.var,family=binomial,subset=status==0)
     }
     else{
-      pgam = gam(samplestat~s(survtime)+s(left.time)+s(match.var[,kont])+factor(match.var[,kat]),family=binomial,subset=status==0)
+      temp.match.var = factor(match.var[,1])
+      if(length(kat) >1)  {
+        for(i in 2:length(kat))  {
+          temp.match.var = cbind(temp.match.var, factor(match.var[,i]))
+        }
+      }
+      pgam = gam(samplestat~s(survtime)+s(left.time)+s(match.var[,kont])+temp.match.var,family=binomial,subset=status==0)
     }
     pgam = pgam$fitted
   }
@@ -675,7 +695,7 @@ pGLM = function(status,survtime,samplestat,n.cohort,left.time,match.var,match.in
     kont = 0
     temp1 = which(match.int == 0)
     temp2 = which(match.int != 0)
-  
+    
     if(length(temp1)>1) {
       indtemp = seq(2,length(temp1),2)
       kat = temp1[indtemp]/2  
@@ -691,14 +711,28 @@ pGLM = function(status,survtime,samplestat,n.cohort,left.time,match.var,match.in
     pglm = pglm$fitted
   }
   if(length(left.time)==1 & length(match.var) > 1)  {
-    if(kat == 0) {
+    if(length(kat) == 1 && kat == 0) {
       pglm = glm(samplestat~survtime+match.var,family=binomial,subset=status==0)
     }
-    if(kont == 0) {
-      pglm = glm(samplestat~survtime+factor(match.var),family=binomial,subset=status==0)
+    else if(length(kont)==1 && kont==0) {
+      temp.match.var = factor(match.var[,1])
+      if(length(kat) >1)  {
+        for(i in 2:length(kat))  {
+          temp.match.var = cbind(temp.match.var, factor(match.var[,i]))
+        }
+      }
+      
+      pglm = glm(samplestat~survtime+temp.match.var,family=binomial,subset=status==0)
     }
-    if(kont != 0 & kat != 0) {
-      pglm = glm(samplestat~survtime+match.var[,kont]+factor(match.var[,kat]),family=binomial,subset=status==0)
+    else{#(kont != 0 & kat != 0) {
+      temp.match.var = factor(match.var[,1])
+      if(length(kat) >1)  {
+        for(i in 2:length(kat))  {
+          temp.match.var = cbind(temp.match.var, factor(match.var[,i]))
+        }
+      }
+      
+      pglm = glm(samplestat~survtime+match.var[,kont]+temp.match.var,family=binomial,subset=status==0)
     }
     pglm = pglm$fitted
   }
@@ -713,10 +747,24 @@ pGLM = function(status,survtime,samplestat,n.cohort,left.time,match.var,match.in
       pglm = glm(samplestat~survtime+left.time+match.var,family=binomial,subset=status==0)
     }
     else if(length(kont)==1 && kont==0) {
-      pglm = glm(samplestat~survtime+left.time+factor(match.var),family=binomial,subset=status==0)
+      temp.match.var = factor(match.var[,1])
+      if(length(kat) >1)  {
+        for(i in 2:length(kat))  {
+          temp.match.var = cbind(temp.match.var, factor(match.var[,i]))
+        }
+      }
+      
+      pglm = glm(samplestat~survtime+left.time+temp.match.var,family=binomial,subset=status==0)
     }
     else{#(kont != 0 & kat != 0) {
-      pglm = glm(samplestat~survtime+left.time+match.var[,kont]+factor(match.var[,kat]),family=binomial,subset=status==0)
+      temp.match.var = factor(match.var[,1])
+      if(length(kat) >1)  {
+        for(i in 2:length(kat))  {
+          temp.match.var = cbind(temp.match.var, factor(match.var[,i]))
+        }
+      }
+      
+      pglm = glm(samplestat~survtime+left.time+match.var[,kont]+temp.match.var,family=binomial,subset=status==0)
     }  
     pglm = pglm$fitted
   }
@@ -724,7 +772,7 @@ pGLM = function(status,survtime,samplestat,n.cohort,left.time,match.var,match.in
 }
 
 pChen = function(status,survtime,samplestat,ind.no,n.cohort,no.intervals,left.time,
-                  no.intervals.left)  {
+                 no.intervals.left)  {
   
   if(length(left.time)==1)  {
     pchen = 1:no.intervals

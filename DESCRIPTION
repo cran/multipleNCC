@@ -1,8 +1,8 @@
 Package: multipleNCC
 Type: Package
 Title: Weighted Cox-Regression for Nested Case-Control Data
-Version: 1.2-3
-Date: 2023-07-08
+Version: 1.2-4
+Date: 2024-12-02
 Author: Nathalie C. Stoer, Sven Ove Samuelsen
 Maintainer: Nathalie C. Stoer <nathalie.c.stoer@kreftregisteret.no>
 Description: Fit Cox proportional hazard models with a weighted 
@@ -12,6 +12,6 @@ Description: Fit Cox proportional hazard models with a weighted
 Depends: survival, mgcv
 License: GPL-2
 NeedsCompilation: no
-Packaged: 2023-07-08 14:30:47 UTC; nacst
+Packaged: 2024-02-12 14:28:20 UTC; nacst
 Repository: CRAN
-Date/Publication: 2023-07-09 09:10:09 UTC
+Date/Publication: 2024-02-12 20:10:05 UTC
