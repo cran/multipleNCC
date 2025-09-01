@@ -52,7 +52,7 @@ Nathalie C. Stoer
 
 
 \seealso{
-\code{\link{wpl}}, \code{\link{coxph}}, \code{\link{GAMprob}}, \code{\link{GLMprob}}, 
+\code{\link{wpl}}, \code{\link[survival]{coxph}}, \code{\link{GAMprob}}, \code{\link{GLMprob}}, 
 \code{\link{KMprob}}
 }
 

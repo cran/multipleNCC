@@ -61,7 +61,7 @@ Nathalie C. Stoer
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-\code{\link{wpl}}, \code{\link{coxph}}, \code{\link{Chenprob}}, \code{\link{GLMprob}}, 
+\code{\link{wpl}}, \code{\link[survival]{coxph}}, \code{\link{Chenprob}}, \code{\link{GLMprob}}, 
 \code{\link{GAMprob}}
 }
 \examples{

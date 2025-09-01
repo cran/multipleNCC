@@ -43,5 +43,5 @@ studies with multiple outcomes. Lifetime Data Analysis, 18(3), 261-283.
 
 \keyword{ package }
 \seealso{
-\code{\link{wpl}}, \code{\link{coxph}}, \code{\link{Chenprob}}, \code{\link{GLMprob}}, \code{\link{GAMprob}}, \code{\link{KMprob}}
+\code{\link{wpl}}, \code{\link[survival]{coxph}}, \code{\link{Chenprob}}, \code{\link{GLMprob}}, \code{\link{GAMprob}}, \code{\link{KMprob}}
 }

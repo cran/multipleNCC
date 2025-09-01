@@ -33,7 +33,7 @@
   %% ~Make other sections like Warning with \section{Warning }{....} ~
     
     \seealso{
-      \code{\link{wpl}}, \code{\link{GAMprob}}, \code{\link{gam}}
+      \code{\link{wpl}}, \code{\link{GAMprob}}, \code{\link[gam]{gam}}
     }
   
   % Add one or more standard keywords, see file 'KEYWORDS' in the
